@@ -23,7 +23,6 @@ const GroupChatModal = ({children}) => {
     const {isOpen, onOpen, onClose} = useDisclosure();
     const [groupChatName, setGroupChatName] = useState();
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const[loading, setLoading] = useState(false);
 
@@ -49,12 +48,11 @@ const GroupChatModal = ({children}) => {
               Authorization:`Bearer ${user.token}`,
             },
           };
-          axios.get(`http://localhost:5000/user/getallusers?search=${search}`,config)
+          axios.get(`/user/getallusers?search=${search}`,config)
           .then((response)=>{
             if(response.status===200){
               setLoading(false);
               setSearchResult(response.data);
-              console.log(response.data)
             }
           })
         } catch (error) {  
@@ -89,7 +87,7 @@ const GroupChatModal = ({children}) => {
             },
           };
 
-          await axios.post(`http://localhost:5000/chat/groupchat`,{
+          await axios.post(`/chat/groupchat`,{
             name:groupChatName,
             users:JSON.stringify(selectedUsers.map(u=>u._id))
           },config).then((response)=>{

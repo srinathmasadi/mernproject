@@ -3,15 +3,15 @@ import { Button } from "@chakra-ui/button";
 import {VStack} from '@chakra-ui/layout';
 import {Input, InputGroup, InputRightElement} from '@chakra-ui/input'
 import {FormControl,FormLabel} from '@chakra-ui/form-control'
-import { useHistory } from "react-router";
 import { useToast } from "@chakra-ui/toast";
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+
 const Signup = () => {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
     const toast = useToast();
     const history = useHistory();
-
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -43,10 +43,8 @@ const Signup = () => {
             }).then((res)=>res.json())
             .then(data=>{
                 setPic(data.url.toString());
-                console.log(data.url.toString());
                 setLoading(false);
             }).catch((e)=>{
-                console.log(e);
                 setLoading(false);
             }); 
         } else{
@@ -87,7 +85,7 @@ const Signup = () => {
             setLoading(false);
             return;
         }
-        axios.post("http://localhost:5000/user/register", {
+        axios.post("/user/register", {
           email,name,password,pic
         }).then((response)=> {
           if(response.status === 200) {
@@ -102,7 +100,6 @@ const Signup = () => {
                 setLoading(false);
                 history.push("/chats");
           } 
-          console.log(response.data);
         }).catch((e)=> {
           toast({
             title: "Error Occured",

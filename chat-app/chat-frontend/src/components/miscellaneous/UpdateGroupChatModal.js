@@ -25,7 +25,6 @@ import UserListItem from "../UserAvatar/UserListItem";
 const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
-  const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [renameloading, setRenameLoading] = useState(false);
@@ -53,7 +52,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
             },
           };
 
-          await axios.put(`http://localhost:5000/chat/pulluser`,{
+          await axios.put(`/chat/pulluser`,{
            chatId:selectedChat._id,
            userId:user1._id,
           },config).then((response)=>{
@@ -94,7 +93,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
             },
           };
 
-          await axios.put(`http://localhost:5000/chat/renamegroup`,{
+          await axios.put(`/chat/renamegroup`,{
             chatId:selectedChat._id,
             chatName:groupChatName
           },config).then((response)=>{
@@ -139,12 +138,11 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
           Authorization:`Bearer ${user.token}`,
         },
       };
-      axios.get(`http://localhost:5000/user/getallusers?search=${search}`,config)
+      axios.get(`/user/getallusers?search=${search}`,config)
       .then((response)=>{
         if(response.status===200){
           setLoading(false);
           setSearchResult(response.data);
-          console.log(response.data)
         }
       })
     } catch (error) {  
@@ -187,7 +185,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
             },
           };
 
-          await axios.put(`http://localhost:5000/chat/addtogroup`,{
+          await axios.put(`/chat/addtogroup`,{
            chatId:selectedChat._id,
            userId:user1._id,
           },config).then((response)=>{

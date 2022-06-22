@@ -30,7 +30,7 @@ const Login = () => {
           setLoading(false);
           return;
       }
-      axios.post("http://localhost:5000/user/login", {
+      axios.post("/user/login", {
         email,password
       }).then((response)=> {
         if(response.status === 200) {
@@ -45,7 +45,6 @@ const Login = () => {
               setLoading(false);
               history.push("/chats");
         } 
-        console.log(response.data);
       }).catch((e)=> {
         toast({
           title: "Error Occured",

@@ -9,6 +9,7 @@ import {getSender} from "../Config/ChatLogics";
 import GroupChatModal from './miscellaneous/GroupChatModal';
 import { Button } from "@chakra-ui/button";
 
+
 const MyChats = ({fetchAgain}) => {
   const [loggedUser, setLoggedUser] = useState();
   const {user,selectedChat,setSelectedChat, chats, setChats} = ChatState();
@@ -23,14 +24,13 @@ const MyChats = ({fetchAgain}) => {
         },
       };
 
-     await axios.get(`http://localhost:5000/chat/fetchchat`,config)
+     await axios.get(`/chat/fetchchat`,config)
       .then((response)=>{
         if(response.status===200){
           setChats(response.data);
         }
       })
     } catch (error) {
-      console.log(error)
       toast({
         title:error.message,
         status:"error",

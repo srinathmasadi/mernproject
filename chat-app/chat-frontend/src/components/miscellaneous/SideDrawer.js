@@ -22,7 +22,7 @@ import { Avatar } from "@chakra-ui/avatar";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { Toast, useToast } from "@chakra-ui/toast";
+import {  useToast } from "@chakra-ui/toast";
 import { ChatState } from "../../context/ChatProvider";
 import ProfileModal from "./ProfileModal";
 import ChatLoading from "./ChatLoading";
@@ -67,13 +67,13 @@ const SideDrawer = () => {
             Authorization:`Bearer ${user.token}`,
           },
         };
-        axios.get(`http://localhost:5000/user/getallusers?search=${search}`,config)
+        axios.get(`/user/getallusers?search=${search}`,config)
         .then((response)=>{
           if(response.status===200){
             setLoading(false);
             setSearchResult(response.data);
           }
-        }).catch((error)=>console.log(error)) 
+        })
       } catch (error) {  
         toast({
           title:"Error Occured!",
@@ -96,7 +96,7 @@ const SideDrawer = () => {
           },
         };
 
-        await axios.post(`http://localhost:5000/chat/accesschat`,{userId},config)
+        await axios.post(`/chat/accesschat`,{userId},config)
         .then((response)=>{
           if(response.status===200){
             if(!chats.find((c)=>c._id===response.data._id))
@@ -106,7 +106,7 @@ const SideDrawer = () => {
             onClose();
 
           }
-        }).catch((error)=>{console.log(error)})
+        })
       } catch (error) {
         toast({
           title:"Error Fetching The Chat",
@@ -138,7 +138,7 @@ const SideDrawer = () => {
           </Button>
         </Tooltip>
         <Text fontSize="2xl" fontFamily="Work sans">
-          Chat Karo
+          Chat-Karo
         </Text>
         <div>
         <Menu>
