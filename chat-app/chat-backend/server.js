@@ -4,6 +4,7 @@ const userRoute = require('./routes/userRoutes');
 const cors = require('cors');
 const chatRoute = require('./routes/chatRoute');
 const messageRoute = require('./routes/messageRoute');
+const path = require('path')
 
 require('./config/db');
 dotenv.config();
@@ -18,6 +19,22 @@ const PORT = process.env.PORT;
 app.use("/user",userRoute);
 app.use("/chat",chatRoute);
 app.use("/message",messageRoute);
+
+// ---------------------Deployment-------------------
+
+const __dirname1 =path.resolve();
+if(process.env.NODE_ENV==='production'){
+    app.use(express.static(path.join(__dirname1,'../chat-frontend/build')));
+    app.get('*',(req,res)=>{
+        res.sendFile(path.resolve(__dirname1,"chat-frontend","build","index.html"));
+    })
+} else{
+    app.get("/",(req,res)=>{
+        res.send("Api is Running Successfully");
+    })
+}
+
+// ---------------------Deployment-------------------
 
 const server = app.listen(PORT, ()=> {
     console.log(`Server started on PORT : ${PORT}` );
