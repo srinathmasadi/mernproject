@@ -28,6 +28,9 @@ import ProfileModal from "./ProfileModal";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "../UserAvatar/UserListItem";
 import { Spinner } from "@chakra-ui/react";
+import { getSender } from "../../Config/ChatLogics";
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
 
 const SideDrawer = () => {
     const [search, setSearch] = useState("");
@@ -36,7 +39,7 @@ const SideDrawer = () => {
     const [loadingChat, setLoadingChat] = useState();
     const {isOpen, onOpen, onClose} = useDisclosure();
 
-    const {user,selectedChat,setSelectedChat, chats, setChats} = ChatState();
+    const {user,setSelectedChat, chats, setChats,notifications, setNotifications} = ChatState();
     const history = useHistory();
 
     const logOutHandler = ()=> {
@@ -135,18 +138,32 @@ const SideDrawer = () => {
           </Button>
         </Tooltip>
         <Text fontSize="2xl" fontFamily="Work sans">
-          Talk-A-Tive
+          Chat Karo
         </Text>
         <div>
-          <Menu>
+        <Menu>
             <MenuButton p={1}>
+              <NotificationBadge
+                count={notifications.length}
+                effect={Effect.SCALE}
+              />
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
             <MenuList pl={2}>
-                <MenuItem >
-
+              {!notifications.length && "No New Messages"}
+              {notifications.map((notif) => (
+                <MenuItem
+                  key={notif._id}
+                  onClick={() => {
+                    setSelectedChat(notif.chat);
+                    setNotifications(notifications.filter((n) => n !== notif));
+                  }}
+                >
+                  {notif.chat.isGroupChat
+                    ? `New Message in ${notif.chat.chatName}`
+                    : `New Message from ${getSender(user, notif.chat.users)}`}
                 </MenuItem>
-              
+              ))}
             </MenuList>
           </Menu>
           <Menu>
