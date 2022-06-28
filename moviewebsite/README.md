@@ -1,3 +1,12 @@
+Movie Website is a simple Web-Application in which user can view the movies along with the reviews
+
+https://srinath-movie-app.netlify.app/
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
