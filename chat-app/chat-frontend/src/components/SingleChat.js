@@ -13,7 +13,7 @@ import { io } from 'socket.io-client';
 import Lottie from 'react-lottie';
 import animationData from '../animations/typing.json'
 
-const ENDPOINT = '';
+const ENDPOINT = 'https://mern-chat-karo.herokuapp.com/';
 var socket, selectedChatCompare;
 
 

@@ -1,15 +1,17 @@
 
-import { Fragment } from 'react';
+import { Fragment,lazy, Suspense } from 'react';
 import { Route } from 'react-router-dom';
-import ChatPage from './pages/ChatPage';
-import HomePage from './pages/HomePage'
+const ChatPage =lazy(()=>import('./pages/ChatPage')) ;
+const HomePage =lazy(()=>import('./pages/HomePage')) ;
 
 function App() {
   return (
     <Fragment>
       <div className='App'>
-        <Route path='/' component={HomePage} exact/>
-        <Route path='/chats' component={ChatPage} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Route path='/' component={HomePage} exact/>
+          <Route path='/chats' component={ChatPage} />
+        </Suspense> 
       </div>
     </Fragment>
   );
